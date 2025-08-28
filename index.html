@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Michroma&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Michroma&family=Oswald:wght@200..700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
  * {
     margin: 0;
@@ -300,6 +300,26 @@ header:after {
     margin: 0;
     width: 100%;
     padding-left: 0;
+}
+
+.header-favicon {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 10;
+}
+
+.favicon-img {
+    width: clamp(2rem, 3vw, 3rem);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.favicon-img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .logo {
@@ -1481,8 +1501,8 @@ main > section:not(#home) {
 
 .hero {
     text-align: center;
-    height: 100vh;
-    min-height: 100vh;
+    height: 85vh;
+    min-height: 85vh;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
@@ -2411,6 +2431,7 @@ footer a:hover {
 }
 
 .form-group label {
+    font-family: 'Bebas Neue', sans-serif;
     display: block;
     margin-bottom: 0.5rem;
     color: #ffd700;
@@ -2420,6 +2441,7 @@ footer a:hover {
 
 .form-group input,
 .form-group textarea {
+    font-family: 'Bebas Neue', sans-serif;
     width: 100%;
     padding: clamp(0.8rem, 2vw, 1rem);
     background: rgba(255, 255, 255, 0.1);
@@ -2465,6 +2487,7 @@ footer a:hover {
 }
 
 .submit-btn {
+    font-family: 'Bebas Neue', sans-serif;
     background: linear-gradient(135deg, #ffd700, #ffed4e);
     color: #000;
     border: none;
@@ -2505,13 +2528,13 @@ footer a:hover {
 
 /* Estilos específicos para formulários no tema invertido (amarelo) */
 [data-theme="inverted"] .contact-form {
-    background: rgba(70, 70, 70, 0.95) !important;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: transparent !important;
+    border: none;
 }
 
 /* ===== SECÇÃO FULLSCREEN COM IMAGEM E TEXTO ===== */
 .fullscreen-section {
-    height: 100vh; /* Reduzir altura para 100% da viewport */
+    height: 110vh; /* Reduzir altura para 100% da viewport */
     width: 100vw;
     margin: 0 !important; /* Remove todas as margens */
     margin-left: calc(-50vw + 50%) !important;
@@ -2743,6 +2766,17 @@ footer a:hover {
     background: rgba(26, 26, 26, 0.1) !important;
 }
 
+/* Botão Ver mais Projetos na terceira seção (opposite-theme) no tema normal */
+.fullscreen-section.opposite-theme .projects-button {
+    border-color: #000000 !important;
+    color: #000000 !important;
+}
+
+.fullscreen-section.opposite-theme .projects-button:hover {
+    background: #000000 !important;
+    color: #ffd700 !important;
+}
+
 /* Quando tema invertido (amarelo), a seção opposite-theme fica preta */
 [data-theme="inverted"] .fullscreen-section.opposite-theme {
     background: #000000 !important;
@@ -2766,6 +2800,17 @@ footer a:hover {
 
 [data-theme="inverted"] .fullscreen-section.opposite-theme .feature-icon {
     background: rgba(255, 215, 0, 0.1) !important;
+}
+
+/* Botão Ver mais Projetos na terceira seção (opposite-theme) no tema invertido */
+[data-theme="inverted"] .fullscreen-section.opposite-theme .projects-button {
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .projects-button:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
 }
 
 [data-theme="inverted"] .fullscreen-text h2 {
@@ -2917,17 +2962,32 @@ section.fullscreen-section {
     background: transparent;
     border: none;
     padding: 0;
-    max-width: 600px;
+    max-width: 1200px;
     margin: clamp(4rem, 8vw, 6rem) auto;
 }
 
 .contact-container {
-    background: rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 215, 0, 0.1);
-    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+    width: 100%;
+}
+
+.contact-form-section {
+    background: transparent;
+    border: none;
     padding: clamp(2rem, 5vw, 3rem);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info-section {
+    background: transparent;
+    border: none;
+    padding: clamp(2rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
 }
 
 .contact-header {
@@ -2936,7 +2996,7 @@ section.fullscreen-section {
 }
 
 .contact-header h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Bebas Neue', 'Playfair Display', serif;
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     color: var(--accent-primary);
     margin-bottom: 0.5rem;
@@ -2944,6 +3004,7 @@ section.fullscreen-section {
 }
 
 .contact-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
     font-size: 1rem;
     color: var(--text-secondary);
     opacity: 0.8;
@@ -2951,25 +3012,64 @@ section.fullscreen-section {
 }
 
 .contact-info-minimal {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 215, 0, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 2rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.contact-info-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-info-header h3 {
+    font-family: 'Bebas Neue', 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-info-header p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin: 0;
 }
 
 .contact-item-minimal {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    font-size: 0.9rem;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.contact-item-minimal:hover {
+    background: transparent;
+    border: none;
+    transform: translateY(-2px);
 }
 
 .contact-label {
+    font-family: 'Bebas Neue', sans-serif;
     font-weight: 600;
     color: var(--accent-primary);
-    min-width: 80px;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--text-primary);
 }
 
 .contact-item-minimal a {
@@ -2983,53 +3083,98 @@ section.fullscreen-section {
 }
 
 /* Tema invertido para design minimalista */
-[data-theme="inverted"] .contact-container {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.2);
+[data-theme="inverted"] .contact-form-section,
+[data-theme="inverted"] .contact-info-section {
+    background: transparent;
+    border: none;
 }
 
-[data-theme="inverted"] .contact-info-minimal {
-    border-top-color: rgba(255, 215, 0, 0.3);
+[data-theme="inverted"] .contact-item-minimal {
+    background: transparent;
+    border: none;
+}
+
+[data-theme="inverted"] .contact-item-minimal:hover {
+    background: transparent;
+    border: none;
 }
 
 /* Responsividade para contactos minimalistas */
 @media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
     .contact-info-minimal {
-        gap: 0.6rem;
+        gap: 1.5rem;
     }
     
     .contact-item-minimal {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3rem;
+        padding: 1rem;
     }
     
     .contact-label {
-        min-width: auto;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form.minimal {
+        margin: 2rem auto;
+    }
+    
+    .contact-form-section,
+    .contact-info-section {
+        padding: 1.5rem;
     }
 }
 
 [data-theme="inverted"] .form-group input,
 [data-theme="inverted"] .form-group textarea {
-    background: rgba(50, 50, 50, 0.9) !important;
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    color: #fff !important;
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: #000000 !important;
 }
 
 [data-theme="inverted"] .form-group input:focus,
 [data-theme="inverted"] .form-group textarea:focus {
-    background: rgba(60, 60, 60, 0.95) !important;
-    border-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    background: transparent !important;
+    border-color: #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="inverted"] .form-group input::placeholder,
 [data-theme="inverted"] .form-group textarea::placeholder {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-theme="inverted"] .form-group label {
-    color: #ffd700 !important;
+    color: #000000 !important;
+}
+
+/* Títulos e textos da seção de contatos no tema invertido */
+[data-theme="inverted"] .contact-header h3,
+[data-theme="inverted"] .contact-info-header h3 {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-subtitle,
+[data-theme="inverted"] .contact-info-header p {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-label {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-value,
+[data-theme="inverted"] .contact-item-minimal a {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-item-minimal a:hover {
+    color: #333333 !important;
 }
 
 /* Professional Work Portfolio Styles - Skylab Inspired */
@@ -6996,74 +7141,61 @@ section.fullscreen-section {
     gap: 2rem;
 }
 
-/* Logo com barra de progresso integrada */
-.loading-logo {
+/* Favicon com barra de progresso integrada */
+.loading-favicon {
     position: relative;
     width: 120px;
     height: 120px;
-    animation: logoBreath 3s ease-in-out infinite;
+    animation: faviconBreath 4s ease-in-out infinite; /* 4s em vez de 3s */
 }
 
-/* Logo base (cinza/transparente) */
-.loading-logo-base {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    opacity: 0.3;
-    filter: brightness(0.4);
+.loading-favicon-base,
+.loading-favicon-fill {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.loading-favicon-base {
+    opacity: 0.3;
+    filter: grayscale(100%) brightness(0.7);
     z-index: 1;
 }
 
-/* Logo preenchido (amarelo) */
-.loading-logo-fill {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.loading-favicon-mask {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    filter: drop-shadow(0 0 8px var(--accent-primary)) 
-            drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
-}
-
-/* Efeito de brilho no logo */
-.loading-logo::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    background: radial-gradient(circle, transparent 60%, var(--accent-primary) 100%);
-    opacity: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     border-radius: 50%;
-    z-index: 0;
-    animation: logoGlow 3s ease-in-out infinite;
+    z-index: 2;
 }
 
-@keyframes logoBreath {
-    0%, 100% {
+.loading-favicon-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    transition: height 0.6s ease; /* Transição mais lenta: 0.6s em vez de 0.3s */
+    transform: translateY(100%);
+    filter: drop-shadow(0 0 20px var(--accent-primary));
+}
+
+/* Animação de respiração do favicon */
+@keyframes faviconBreath {
+    0%, 100% { 
         transform: scale(1);
+        filter: drop-shadow(0 0 20px var(--accent-primary));
     }
-    50% {
+    50% { 
         transform: scale(1.05);
-    }
-}
-
-@keyframes logoGlow {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 0.3;
-        transform: scale(1.2);
+        filter: drop-shadow(0 0 30px var(--accent-primary));
     }
 }
 
@@ -7074,7 +7206,7 @@ section.fullscreen-section {
     color: var(--accent-primary);
     font-weight: 500;
     opacity: 0.9;
-    animation: textPulse 2s ease-in-out infinite;
+    animation: textPulse 3s ease-in-out infinite; /* 3s em vez de 2s */
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     margin-top: 0.5rem;
 }
@@ -7126,13 +7258,13 @@ section.fullscreen-section {
     background: var(--bg-primary);
 }
 
-[data-theme="inverted"] .loading-logo-base {
+[data-theme="inverted"] .loading-favicon-base {
     opacity: 0.4;
-    filter: brightness(0.6);
+    filter: grayscale(100%) brightness(0.6);
 }
 
-[data-theme="inverted"] .loading-logo-fill {
-    filter: drop-shadow(0 0 8px var(--accent-primary)) 
+[data-theme="inverted"] .loading-favicon-fill {
+    filter: drop-shadow(0 0 20px var(--accent-primary)) 
             drop-shadow(0 0 15px rgba(26, 26, 26, 0.4));
 }
 
@@ -7854,15 +7986,18 @@ section.fullscreen-section {
     </style>
 </head>
 <body>
-    <!-- Tela de Carregamento com Logo Integrado -->
+    <!-- Tela de Carregamento com Favicon -->
     <div class="loading-screen" id="loading-screen">
         <div class="loading-container">
-            <!-- Logo com progresso integrado -->
-            <div class="loading-logo">
-                <!-- Logo base (cinza/transparente) -->
-                <img src="BDN_logo.png" alt="BDN Logo" class="loading-logo-base">
-                <!-- Logo preenchido (amarelo) que se revela conforme o progresso -->
-                <img src="BDN_logo.png" alt="BDN Logo" class="loading-logo-fill" id="loading-logo-fill">
+            <!-- Favicon com progresso integrado -->
+            <div class="loading-favicon">
+                <!-- Favicon base (cinza/transparente) -->
+                <img src="bdn_fabicon.png" alt="BDN Favicon" class="loading-favicon-base">
+                <!-- Container para a máscara de preenchimento -->
+                <div class="loading-favicon-mask">
+                    <!-- Favicon preenchido que se revela de baixo para cima -->
+                    <img src="bdn_fabicon.png" alt="BDN Favicon" class="loading-favicon-fill" id="loading-favicon-fill">
+                </div>
             </div>
             
             <!-- Texto de progresso elegante -->
@@ -7904,6 +8039,11 @@ section.fullscreen-section {
                             <a href="#contato" class="dropdown-link" data-translate="nav_contact">Contacto</a>
                         </nav>
                     </div>
+                </div>
+                
+                <!-- Favicon no canto direito superior -->
+                <div class="header-favicon">
+                    <img src="bdn_fabicon.png" alt="BDN Favicon" class="favicon-img">
                 </div>
                 
                 <!-- Mobile Navigation -->
@@ -8056,7 +8196,7 @@ section.fullscreen-section {
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                            <a href="galeria.html" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
                         </div>
                     </div>
                     
@@ -8100,7 +8240,7 @@ section.fullscreen-section {
                     <!-- Lado Esquerdo - Imagem -->
                     <div class="fullscreen-image">
                         <div class="image-container">
-                            <img src="imagens/arquitetamos.png" alt="Projeto BDN - Arquitetura Moderna" class="fullscreen-img">
+                            <img src="imagens/arquitetamos.png" alt="Projeto BDN - Arquitetura Moderna" class="fullscreen-img arquitetamos-gallery-trigger" style="cursor: pointer;">
                         </div>
                     </div>
                     
@@ -8133,7 +8273,7 @@ section.fullscreen-section {
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                            <a href="galeria.html" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
                         </div>
                     </div>
                 </div>
@@ -8173,14 +8313,14 @@ section.fullscreen-section {
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                            <a href="galeria.html" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
                         </div>
                     </div>
                     
                     <!-- Lado Direito - Imagem -->
                     <div class="fullscreen-image">
                         <div class="image-container">
-                            <img src="imagens/img6.png" alt="Projeto BDN - Construção de Qualidade" class="fullscreen-img">
+                            <img src="imagens/img6.png" alt="Projeto BDN - Construção de Qualidade" class="fullscreen-img construimos-gallery-trigger" style="cursor: pointer;">
                         </div>
                     </div>
                 </div>
@@ -8189,68 +8329,85 @@ section.fullscreen-section {
 
         <!-- Secção Contacto -->
         <section id="contato" class="section">
-           
-
             <!-- Formulário de Contacto Minimalista -->
             <div class="contact-form minimal">
                 <div class="contact-container">
-                    <div class="contact-header">
-                        <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
-                        <p class="contact-subtitle" data-translate="contact_subtitle">Estamos aqui para transformar as suas ideias em realidade</p>
+                    <!-- Lado Esquerdo - Formulário -->
+                    <div class="contact-form-section">
+                        <div class="contact-header">
+                            <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
+                            <p class="contact-subtitle" data-translate="contact_subtitle">Estamos aqui para transformar as suas ideias em realidade</p>
+                        </div>
+                        
+                        <form id="contactForm" novalidate>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                    <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" data-translate="form_last_name">Último Nome *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                    <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" data-translate="form_email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
+                                <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" data-translate="form_message">Mensagem *</label>
+                                <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
+                                <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
+                            
+                            <div class="success-message" id="successMessage" data-translate="form_success">
+                                Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
+                            </div>
+                        </form>
                     </div>
                     
-                    <form id="contactForm" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
-                                <input type="text" id="firstName" name="firstName" required>
-                                <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName" data-translate="form_last_name">Último Nome *</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                                <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
-                            </div>
+                    <!-- Lado Direito - Informações de Contacto -->
+                    <div class="contact-info-section">
+                        <div class="contact-info-header">
+                            <h3 data-translate="contact_info_title">Contacto</h3>
+                            <p data-translate="contact_info_subtitle">Entre em contacto connosco através dos seguintes meios</p>
                         </div>
-
-                        <div class="form-group">
-                            <label for="email" data-translate="form_email">Email *</label>
-                            <input type="email" id="email" name="email" required>
-                            <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
-                            <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message" data-translate="form_message">Mensagem *</label>
-                            <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
-                            <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
-                        </div>
-
-                        <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
                         
-                        <div class="success-message" id="successMessage" data-translate="form_success">
-                            Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
-                        </div>
-                    </form>
-                    
-                    <!-- Informações de contacto mínimas -->
-                    <div class="contact-info-minimal">
-                        <div class="contact-item-minimal">
-                            <span class="contact-label">Email:</span>
-                            <a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a>
-                        </div>
-                        <div class="contact-item-minimal">
-                            <span class="contact-label">Telefone:</span>
-                            <a href="tel:+351911504793">911 504 793</a>
-                        </div>
-                        <div class="contact-item-minimal">
-                            <span class="contact-label">Localização:</span>
-                            <span>Esposende, Portugal</span>
+                        <div class="contact-info-minimal">
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_email_label">Email</div>
+                                <div class="contact-value">
+                                    <a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_phone_label">Telefone</div>
+                                <div class="contact-value">
+                                    <a href="tel:+351911504793">911 504 793</a>
+                                </div>
+                            </div>
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_address_label">Morada</div>
+                                <div class="contact-value">
+                                    <span>Av. Comendador Francisco Alves Quintas<br>
+                                    Zona Ind. Gandra<br>
+                                    Edifício Bouro Nascente 671<br>
+                                    4740-010 Esposende</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -8281,16 +8438,16 @@ section.fullscreen-section {
     </footer>
 
     <script>
-        // ===== LOGO INTEGRATED LOADING SCREEN FUNCTIONALITY =====
-        class LogoLoadingScreen {
+        // ===== FAVICON INTEGRATED LOADING SCREEN FUNCTIONALITY =====
+        class FaviconLoadingScreen {
             constructor() {
                 this.loadingScreen = document.getElementById('loading-screen');
-                this.logoFill = document.getElementById('loading-logo-fill');
+                this.faviconFill = document.getElementById('loading-favicon-fill');
                 this.progressText = document.getElementById('progress-text');
                 
                 this.progress = 0;
                 this.isComplete = false;
-                this.minLoadingTime = 1500; // 1.5 segundos mínimo
+                this.minLoadingTime = 1500; // Reduzido de 3s para 1.5s
                 this.startTime = Date.now();
                 
                 this.init();
@@ -8308,32 +8465,45 @@ section.fullscreen-section {
             }
             
             simulateProgress() {
-                const interval = setInterval(() => {
-                    if (this.progress < 90) {
-                        // Incremento suave
-                        const increment = this.progress < 50 ? 3 : 2;
-                        this.progress += increment;
+                // Primeira etapa: 0% até 50%
+                const firstStage = setInterval(() => {
+                    if (this.progress < 50) {
+                        this.progress += 2;
                         this.updateProgress();
                     } else {
-                        clearInterval(interval);
-                        this.waitForCompletion();
+                        clearInterval(firstStage);
+                        
+                        // Pausa entre etapas (reduzida para metade)
+                        setTimeout(() => {
+                            // Segunda etapa: 50% até 95%
+                            const secondStage = setInterval(() => {
+                                if (this.progress < 95) {
+                                    this.progress += 1.5;
+                                    this.updateProgress();
+                                } else {
+                                    clearInterval(secondStage);
+                                    this.waitForCompletion();
+                                }
+                            }, 40); // Reduzido de 80ms para 40ms
+                        }, 400); // Reduzido de 800ms para 400ms
                     }
-                }, 100);
+                }, 60); // Reduzido de 120ms para 60ms
             }
             
             updateProgress() {
                 this.progress = Math.min(100, this.progress);
                 
-                // Atualizar preenchimento do logo usando clip-path
-                // O logo se revela de baixo para cima
-                const fillPercentage = 100 - this.progress;
-                this.logoFill.style.clipPath = `inset(${fillPercentage}% 0 0 0)`;
+                // Atualizar preenchimento do favicon de baixo para cima
+                // A altura aumenta progressivamente
+                const fillPercentage = this.progress;
+                this.faviconFill.style.height = `${fillPercentage}%`;
+                this.faviconFill.style.transform = `translateY(${100 - fillPercentage}%)`;
                 
                 // Atualizar texto
                 this.progressText.textContent = Math.floor(this.progress) + '%';
                 
                 if (this.progress >= 100 && !this.isComplete) {
-                    setTimeout(() => this.completeLoading(), 300);
+                    setTimeout(() => this.completeLoading(), 400); // Reduzido de 800ms para 400ms
                 }
             }
             
@@ -8344,8 +8514,15 @@ section.fullscreen-section {
                     const contentLoaded = document.readyState === 'complete';
                     
                     if (minTimeReached && contentLoaded && !this.isComplete) {
-                        this.progress = 100;
-                        this.updateProgress();
+                        // Terceira etapa: 95% até 100% de forma visível
+                        const finalStage = setInterval(() => {
+                            if (this.progress < 100) {
+                                this.progress += 1;
+                                this.updateProgress();
+                            } else {
+                                clearInterval(finalStage);
+                            }
+                        }, 75); // Reduzido de 150ms para 75ms
                     } else {
                         setTimeout(checkCompletion, 50);
                     }
@@ -8451,7 +8628,7 @@ section.fullscreen-section {
             document.body.style.pointerEvents = 'none';
             
             // Start logo integrated loading screen
-            new LogoLoadingScreen();
+            new FaviconLoadingScreen();
             
             // Start logo background system
             new LogoBackgroundController();
@@ -8593,7 +8770,7 @@ section.fullscreen-section {
             const body = document.body;
             
             // Verificar se há tema salvo no localStorage
-            const savedTheme = localStorage.getItem('website-theme') || 'default';
+            const savedTheme = localStorage.getItem('bdn-theme') || 'default';
             
             // Aplicar tema salvo
             if (savedTheme === 'inverted') {
@@ -8607,17 +8784,31 @@ section.fullscreen-section {
                 if (currentTheme === 'inverted') {
                     // Mudar para tema padrão
                     body.removeAttribute('data-theme');
-                    localStorage.setItem('website-theme', 'default');
+                    localStorage.setItem('bdn-theme', 'default');
                     console.log('Tema alterado para: Padrão (Preto e Amarelo)');
                 } else {
                     // Mudar para tema inverso
                     body.setAttribute('data-theme', 'inverted');
-                    localStorage.setItem('website-theme', 'inverted');
+                    localStorage.setItem('bdn-theme', 'inverted');
                     console.log('Tema alterado para: Inverso (Amarelo e Preto)');
                 }
                 
                 // Atualizar cursor personalizado
                 updateCustomCursor();
+            });
+            
+            // Sincronizar tema entre abas/páginas
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'bdn-theme') {
+                    const newTheme = e.newValue || 'default';
+                    if (newTheme === 'inverted') {
+                        body.setAttribute('data-theme', 'inverted');
+                    } else {
+                        body.removeAttribute('data-theme');
+                    }
+                    updateCustomCursor();
+                    console.log(`Tema sincronizado: ${newTheme === 'inverted' ? 'Inverso' : 'Padrão'}`);
+                }
             });
             
             console.log(`Tema inicializado: ${savedTheme === 'inverted' ? 'Inverso' : 'Padrão'}`);
@@ -9225,6 +9416,27 @@ section.fullscreen-section {
                 { src: 'imagens/projetamos/habitacao5.png', alt: 'Projeto Habitação 5 - Habitação Contemporânea', caption: 'Projeto Habitação 5 - Habitação Contemporânea' }
             ];
             
+            // Galeria específica do "Arquitetamos"
+            const arquitetamosImages = [
+                { src: 'imagens/arquitetamos/habitacao2.png', alt: 'Arquitetura Habitação 2 - Design Espacial', caption: 'Arquitetura Habitação 2 - Design Espacial' },
+                { src: 'imagens/arquitetamos/habitacao3.png', alt: 'Arquitetura Habitação 3 - Planeamento Moderno', caption: 'Arquitetura Habitação 3 - Planeamento Moderno' },
+                { src: 'imagens/arquitetamos/habitacao4.png', alt: 'Arquitetura Habitação 4 - Sustentabilidade', caption: 'Arquitetura Habitação 4 - Sustentabilidade' },
+                { src: 'imagens/arquitetamos/habitacao5.png', alt: 'Arquitetura Habitação 5 - Design Funcional', caption: 'Arquitetura Habitação 5 - Design Funcional' },
+                { src: 'imagens/arquitetamos/habitacao6.png', alt: 'Arquitetura Habitação 6 - Espaços Únicos', caption: 'Arquitetura Habitação 6 - Espaços Únicos' },
+                { src: 'imagens/arquitetamos/habitacao7.png', alt: 'Arquitetura Habitação 7 - Projeto Personalizado', caption: 'Arquitetura Habitação 7 - Projeto Personalizado' },
+                { src: 'imagens/arquitetamos/habitacao8.png', alt: 'Arquitetura Habitação 8 - Inovação Arquitetónica', caption: 'Arquitetura Habitação 8 - Inovação Arquitetónica' },
+                { src: 'imagens/arquitetamos/habitacao9.png', alt: 'Arquitetura Habitação 9 - Conceito Moderno', caption: 'Arquitetura Habitação 9 - Conceito Moderno' }
+            ];
+            
+            // Galeria específica do "Construímos"
+            const construimosImages = [
+                { src: 'imagens/construimos/img6.png', alt: 'Construção 6 - Qualidade Garantida', caption: 'Construção 6 - Qualidade Garantida' },
+                { src: 'imagens/construimos/img7.png', alt: 'Construção 7 - Materiais Sustentáveis', caption: 'Construção 7 - Materiais Sustentáveis' },
+                { src: 'imagens/construimos/img8.png', alt: 'Construção 8 - Gestão de Obra', caption: 'Construção 8 - Gestão de Obra' },
+                { src: 'imagens/construimos/img9.png', alt: 'Construção 9 - Acabamentos Finais', caption: 'Construção 9 - Acabamentos Finais' },
+                { src: 'imagens/construimos/img10.png', alt: 'Construção 10 - Projeto Concluído', caption: 'Construção 10 - Projeto Concluído' }
+            ];
+            
             let currentIndex = 0;
             let currentGallery = []; // Galeria ativa atual
             
@@ -9427,6 +9639,22 @@ section.fullscreen-section {
                 });
             }
 
+            // Event listener para a galeria do "Arquitetamos"
+            const arquitetamosGalleryTrigger = document.querySelector('.arquitetamos-gallery-trigger');
+            if (arquitetamosGalleryTrigger) {
+                arquitetamosGalleryTrigger.addEventListener('click', () => {
+                    showGallery(arquitetamosImages, 0);
+                });
+            }
+
+            // Event listener para a galeria do "Construímos"
+            const construimosGalleryTrigger = document.querySelector('.construimos-gallery-trigger');
+            if (construimosGalleryTrigger) {
+                construimosGalleryTrigger.addEventListener('click', () => {
+                    showGallery(construimosImages, 0);
+                });
+            }
+
         }
 
         // Scroll suave para elementos internos - incluindo dropdown desktop
@@ -9437,7 +9665,14 @@ section.fullscreen-section {
                 if (target) {
                     // Ajustar para a altura da navbar
                     const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    let targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    // Para secções fullscreen, posicionar no meio
+                    const targetId = this.getAttribute('href').substring(1);
+                    if (['projetamos', 'arquitetamos', 'construimos'].includes(targetId)) {
+                        const sectionHeight = target.offsetHeight;
+                        targetPosition = target.offsetTop + (sectionHeight / 2) - (window.innerHeight / 2);
+                    }
                     
                     // Scroll suave
                     window.scrollTo({
