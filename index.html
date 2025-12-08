@@ -9207,6 +9207,16 @@ section.fullscreen-section {
                 this.startTime = Date.now();
                 
                 this.init();
+                
+                // Timeout máximo de segurança - garantir que sempre saia do loading
+                this.maxTimeout = setTimeout(() => {
+                    if (!this.isComplete) {
+                        console.log('Timeout máximo atingido - forçando saída do loading');
+                        this.progress = 100;
+                        this.updateProgress();
+                        this.completeLoading();
+                    }
+                }, 8000); // 8 segundos máximo
             }
             
             init() {
@@ -9258,7 +9268,10 @@ section.fullscreen-section {
                 // Atualizar texto
                 this.progressText.textContent = Math.floor(this.progress) + '%';
                 
+                console.log(`Progress: ${Math.floor(this.progress)}%`);
+                
                 if (this.progress >= 100 && !this.isComplete) {
+                    console.log('Atingiu 100% - iniciando completeLoading');
                     setTimeout(() => this.completeLoading(), 400); // Reduzido de 800ms para 400ms
                 }
             }
@@ -9324,12 +9337,26 @@ section.fullscreen-section {
                         this.updateProgress();
                     });
                 }
+                
+                // Timeout de segurança - forçar conclusão após 5 segundos
+                setTimeout(() => {
+                    if (!this.isComplete) {
+                        console.log('Loading timeout - forçando conclusão');
+                        this.progress = 100;
+                        this.updateProgress();
+                    }
+                }, 5000);
             }
             
             completeLoading() {
                 if (this.isComplete) return;
                 
                 this.isComplete = true;
+                
+                // Limpar timeout de segurança
+                if (this.maxTimeout) {
+                    clearTimeout(this.maxTimeout);
+                }
                 
                 // Fade out suave
                 setTimeout(() => {
