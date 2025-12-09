@@ -7674,16 +7674,16 @@ section.fullscreen-section {
     overflow: hidden;
     border-radius: 50%;
     z-index: 2;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.3s ease;
 }
 
 .loading-favicon-fill {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 0%;
-    transition: height 0.6s ease; /* Transição mais lenta: 0.6s em vez de 0.3s */
-    transform: translateY(100%);
+    height: 100%;
     filter: drop-shadow(0 0 20px var(--accent-primary));
 }
 
@@ -8743,14 +8743,14 @@ section.fullscreen-section {
 </head>
 <body>
     <!-- Tela de Carregamento com Favicon -->
-    <div class="loading-screen" id="loading-screen">
+    <div class="loading-screen" id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10001; display: flex;">
         <div class="loading-container">
             <!-- Favicon com progresso integrado -->
             <div class="loading-favicon">
                 <!-- Favicon base (cinza/transparente) -->
                 <img src="bdn_fabicon.png" alt="BDN Favicon" class="loading-favicon-base">
                 <!-- Container para a máscara de preenchimento -->
-                <div class="loading-favicon-mask">
+                <div class="loading-favicon-mask" id="loading-favicon-mask">
                     <!-- Favicon preenchido que se revela de baixo para cima -->
                     <img src="bdn_fabicon.png" alt="BDN Favicon" class="loading-favicon-fill" id="loading-favicon-fill">
                 </div>
@@ -9194,18 +9194,50 @@ section.fullscreen-section {
     </footer>
 
     <script>
+        // ===== FUNÇÃO GLOBAL DE DETECÇÃO DE DISPOSITIVOS MÓVEIS =====
+        // Declarada uma única vez no início para uso em todo o código
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   ('ontouchstart' in window) || 
+                   (navigator.maxTouchPoints > 0) ||
+                   window.innerWidth <= 768;
+        }
+        
         // ===== FAVICON INTEGRATED LOADING SCREEN FUNCTIONALITY =====
         class FaviconLoadingScreen {
             constructor() {
                 this.loadingScreen = document.getElementById('loading-screen');
                 this.faviconFill = document.getElementById('loading-favicon-fill');
+                this.faviconMask = document.getElementById('loading-favicon-mask');
                 this.progressText = document.getElementById('progress-text');
+                
+                console.log('FaviconLoadingScreen inicializado:', {
+                    loadingScreen: this.loadingScreen,
+                    faviconFill: this.faviconFill,
+                    faviconMask: this.faviconMask,
+                    progressText: this.progressText
+                });
+                
+                if (!this.loadingScreen || !this.faviconFill || !this.faviconMask || !this.progressText) {
+                    console.error('ERRO: Elementos do loading screen não encontrados!', {
+                        loadingScreen: !!this.loadingScreen,
+                        faviconFill: !!this.faviconFill,
+                        faviconMask: !!this.faviconMask,
+                        progressText: !!this.progressText
+                    });
+                    // Forçar remoção do loading screen se houver erro
+                    if (this.loadingScreen) {
+                        setTimeout(() => this.loadingScreen.remove(), 100);
+                    }
+                    return;
+                }
                 
                 this.progress = 0;
                 this.isComplete = false;
-                this.minLoadingTime = 1500; // Reduzido de 3s para 1.5s
+                this.minLoadingTime = 1500;
                 this.startTime = Date.now();
                 
+                console.log('Iniciando loading screen...');
                 this.init();
                 
                 // Timeout máximo de segurança - garantir que sempre saia do loading
@@ -9220,6 +9252,7 @@ section.fullscreen-section {
             }
             
             init() {
+                console.log('init() chamado - iniciando simulação de progresso');
                 // Simular progresso de carregamento
                 this.simulateProgress();
                 
@@ -9231,6 +9264,7 @@ section.fullscreen-section {
             }
             
             simulateProgress() {
+                console.log('simulateProgress() iniciado');
                 // Primeira etapa: 0% até 50%
                 const firstStage = setInterval(() => {
                     if (this.progress < 50) {
@@ -9259,20 +9293,23 @@ section.fullscreen-section {
             updateProgress() {
                 this.progress = Math.min(100, this.progress);
                 
-                // Atualizar preenchimento do favicon de baixo para cima
-                // A altura aumenta progressivamente
+                // Atualizar preenchimento do favicon de baixo para cima usando clip-path
                 const fillPercentage = this.progress;
-                this.faviconFill.style.height = `${fillPercentage}%`;
-                this.faviconFill.style.transform = `translateY(${100 - fillPercentage}%)`;
+                if (this.faviconMask) {
+                    const invertedPercentage = 100 - fillPercentage;
+                    this.faviconMask.style.clipPath = `inset(${invertedPercentage}% 0 0 0)`;
+                }
                 
                 // Atualizar texto
-                this.progressText.textContent = Math.floor(this.progress) + '%';
+                if (this.progressText) {
+                    this.progressText.textContent = Math.floor(this.progress) + '%';
+                }
                 
                 console.log(`Progress: ${Math.floor(this.progress)}%`);
                 
                 if (this.progress >= 100 && !this.isComplete) {
                     console.log('Atingiu 100% - iniciando completeLoading');
-                    setTimeout(() => this.completeLoading(), 400); // Reduzido de 800ms para 400ms
+                    setTimeout(() => this.completeLoading(), 400);
                 }
             }
             
@@ -9404,18 +9441,27 @@ section.fullscreen-section {
             }
         }
         
-        // Initialize logo loading screen when DOM starts loading
-        document.addEventListener('DOMContentLoaded', () => {
+        // Initialize logo loading screen IMMEDIATELY - não esperar DOMContentLoaded
+        (function() {
+            console.log('=== INICIALIZANDO LOADING SCREEN IMEDIATAMENTE ===');
+            console.log('document.readyState:', document.readyState);
+            
             // Prevent scroll during loading
             document.body.style.overflow = 'hidden';
             document.body.style.pointerEvents = 'none';
             
             // Start logo integrated loading screen
-            new FaviconLoadingScreen();
+            const loadingScreen = new FaviconLoadingScreen();
             
-            // Start logo background system
-            new LogoBackgroundController();
-        });
+            // Start logo background system when ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    new LogoBackgroundController();
+                });
+            } else {
+                new LogoBackgroundController();
+            }
+        })();
 
         // ===== LOGO BACKGROUND CONTROLLER =====
         class LogoBackgroundController {
@@ -10602,19 +10648,11 @@ section.fullscreen-section {
         }
 
         // Enhanced mobile detection and responsive features
-        function isMobileDevice() {
-            return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                   ('ontouchstart' in window) || 
-                   (navigator.maxTouchPoints > 0) ||
-                   window.innerWidth <= 768;
-        }
+        // Função isMobileDevice já declarada globalmente no início do script
 
         // Remover completamente o espaço entre galeria-inversa e sobre-bdn (apenas em mobile)
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar se é dispositivo móvel
-            function isMobileDevice() {
-                return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
+            // Função isMobileDevice já declarada globalmente
             
             // Só aplicar proximidade em dispositivos móveis
             if (isMobileDevice()) {
@@ -11105,14 +11143,8 @@ section.fullscreen-section {
         }
 
         // ===== MELHORIAS PARA DISPOSITIVOS MOBILE =====
+        // Função isMobileDevice já declarada globalmente no início do script
         
-        // Detectar dispositivo móvel
-        const isMobileDevice = () => {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                   ('ontouchstart' in window) ||
-                   (navigator.maxTouchPoints > 0);
-        };
-
         // Adicionar classe mobile ao body se for dispositivo móvel
         if (isMobileDevice()) {
             document.body.classList.add('mobile-device');
